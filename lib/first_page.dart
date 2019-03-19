@@ -29,10 +29,6 @@ class _FirstPageState extends State<FirstPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-            title: Text('FirstPageDemo'),
-            centerTitle: true,
-        ),
         body: list[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             items: [
