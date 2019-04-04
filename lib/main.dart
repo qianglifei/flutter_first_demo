@@ -3,6 +3,7 @@ import 'first_page.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'splash_screen.dart';
+
 void main(){
     runApp(MyApp());
     if(Platform.isAndroid){
@@ -21,11 +22,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(),
         color: Colors.pink,
-        home: new FirstPage(),
-        routes: <String,WidgetBuilder>{
-            "app" : (BuildContext context) => new FirstPage(),
-            "splash" : (BuildContext context) => new SplashScreen()
-        },
+        home: SplashScreen(),
+//        routes: <String,WidgetBuilder>{
+//            "app" : (BuildContext context) => new FirstPage(),
+//            "splash" : (BuildContext context) => new SplashScreen()
+//        },
     );
   }
 

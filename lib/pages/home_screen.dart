@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pageview_bottomnav/base/base_widget.dart';
 
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends BaseWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -13,6 +14,12 @@ class HomeScreen extends StatelessWidget{
             child: Text('HomeScreen',style: TextStyle(color: Colors.blue,fontSize: 45.0)),
         ),
     );
+  }
+
+  @override
+  BaseWidgetState<BaseWidget> getState() {
+    // TODO: implement getState
+    return null;
   }
 
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ApplicationPage extends StatefulWidget{
-    _ApplicationPageState createState()=> _ApplicationPageState();
+    _ApplicationPageState createState() => _ApplicationPageState();
 }
 
 class _ApplicationPageState extends State<ApplicationPage> {

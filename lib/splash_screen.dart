@@ -14,7 +14,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     list..add(new Slide(
       title: 'FLutter',
       description: "Flutter是谷歌移动的开发框架，可以快速在ios和Android上构建高质量的原生用户界面，Flutter"
@@ -30,12 +29,34 @@ class _SplashScreenState extends State<SplashScreen> {
       directionColorBegin: Alignment.topLeft,
       directionColorEnd: Alignment.bottomRight
     ))..add(new Slide(
-
-    ))..add(new Slide(
-
-    ))..add(new Slide(
-
+        title: "Wanandroid",
+        description:
+        "这是一款使用Flutter写的WanAndroid客户端应用，在Android和IOS都完美运行,可以用来入门Flutter，简单明了，适合初学者,项目完全开源，如果本项目确实能够帮助到你学习Flutter，谢谢start，有问题请提交Issues,我会及时回复。",
+        styleDescription: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontFamily: 'Raleway'),
+        marginDescription: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
+        colorBegin: Color(0xffFFFACD),
+        colorEnd: Color(0xffFF6347),
+        directionColorBegin: Alignment.topLeft,
+        directionColorEnd: Alignment.bottomRight,
+      ),
+    )..add(new Slide(
+        title: "Welcome",
+        description:
+        "赠人玫瑰，手有余香；\n分享技术，传递快乐。",
+        styleDescription: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontFamily: 'Raleway'),
+        marginDescription: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
+        colorBegin: Color(0xffFFA500),
+        colorEnd: Color(0xff7FFFD4),
+        directionColorBegin: Alignment.topLeft,
+        directionColorEnd: Alignment.bottomRight,
     ));
+
   }
 
   void onDonePress(){
