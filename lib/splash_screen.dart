@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return IntroSlider(
         slides: list,
         onDonePress: onDonePress,
-        onSkipPress: onSkipPress,
+       // onSkipPress: onSkipPress,
         nameDoneBtn: "进入",
         nameNextBtn: "下一页",
         nameSkipBtn: "跳过",
