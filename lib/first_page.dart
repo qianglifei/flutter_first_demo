@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/home_screen.dart';
+import 'package:flutter_pageview_bottomnav/ui/home/home_screen.dart';
 import 'pages/message_screen.dart';
 import 'pages/category_screen.dart';
 import 'pages/mine_screen.dart';

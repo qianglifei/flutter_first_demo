@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pageview_bottomnav/app.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'first_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
       _setHasSkip();
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(
-              builder: (context) => new FirstPage()
+              builder: (context) => new App()
           ),
           (route) => route == null
       );
@@ -73,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
       _setHasSkip();
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(
-              builder: (context) => new FirstPage()
+              builder: (context) => new App()
           ),
           (route) => route == null
       );
@@ -90,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return IntroSlider(
         slides: list,
         onDonePress: onDonePress,
-       // onSkipPress: onSkipPress,
+        //onSkipPress: onSkipPress,
         nameDoneBtn: "进入",
         nameNextBtn: "下一页",
         nameSkipBtn: "跳过",

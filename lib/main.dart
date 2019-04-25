@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pageview_bottomnav/app.dart';
+import 'package:flutter_pageview_bottomnav/pages/loading.dart';
 import 'first_page.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -22,12 +24,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(),
         color: Colors.pink,
-        home: SplashScreen(),
-//        routes: <String,WidgetBuilder>{
-//            "app" : (BuildContext context) => new FirstPage(),
-//            "splash" : (BuildContext context) => new SplashScreen()
-//        },
+        home: new LoadingPage(),
+        /**
+         * 路由分为静态路由，和动态路由，这里是静态路由，不能向下一个界面传递参数
+         */
+        routes: <String,WidgetBuilder>{
+            "app" : (BuildContext context) => new App(),
+            "splash" : (BuildContext context) => new SplashScreen()
+        },
     );
   }
-
 }

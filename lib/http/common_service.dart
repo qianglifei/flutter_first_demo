@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'dio_manager.dart';
 import 'api.dart';
+import 'package:flutter_pageview_bottomnav/common/user.dart';
 
 class CommonService{
   void getArticleList(Function callBack,Function errorCallBack, int _page){
