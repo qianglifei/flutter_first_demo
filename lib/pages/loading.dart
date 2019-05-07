@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pageview_bottomnav/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoadingPage extends StatefulWidget{
@@ -30,7 +32,16 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   void _getHasSkip() async{
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool hasSkip = prefs.getBool("hasSkip");
+    if(hasSkip==null||!hasSkip){
+      Navigator.of(context).pushReplacementNamed("splash");
+    }else {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(
+              builder: (context) => App()),
+              (route) => route == null);
+    }
   }
 
 }

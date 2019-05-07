@@ -73,3 +73,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+
+  assets:
+    - images/loading.png
+    - images/flutter.png
+    - images/head.jpg
+    - images/arrow_right.png
+    - images/ic_error.png
+    - images/ic_empty.png
