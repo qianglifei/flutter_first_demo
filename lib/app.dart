@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pageview_bottomnav/ui/drawer/drawer.dart';
 import 'package:flutter_pageview_bottomnav/ui/home/home_screen.dart';
 import 'package:flutter_pageview_bottomnav/ui/knowledge/knowledge_screen.dart';
 import 'package:flutter_pageview_bottomnav/ui/navigation/navigation_screen.dart';
@@ -48,6 +49,7 @@ class AppState extends State<App>{
     //false 表示 不退出，true 表示退出
     return WillPopScope(
         child: Scaffold(
+          drawer: DrawerPage(),
           appBar: AppBar(
             title: new Text(appBarTitles[_selectedIndex]),
             bottom: null,
