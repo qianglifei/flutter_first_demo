@@ -7,5 +7,4 @@ class PublicScreen extends BaseWidget{
     // TODO: implement getState
     return null;
   }
-
 }
