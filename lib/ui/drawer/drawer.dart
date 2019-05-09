@@ -127,8 +127,22 @@ class DrawerPageState extends State<DrawerPage>{
     );
   }
 
-  void onCollectionClick() {}
+  void onCollectionClick() async{
+    await Navigator.of(context).push(
+        new MaterialPageRoute(
+          builder: (context){
+            //return new CollectionsPage();
+          }
+    ));
+  }
 
-  void onLoginClick() {}
+  void onLoginClick() async{
+    await Navigator.of(context).push(
+        new MaterialPageRoute(
+            builder: (context){
+              //return LoginPage();
+            }
+    ));
+  }
 
 }

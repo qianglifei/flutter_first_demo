@@ -23,6 +23,9 @@ dependencies:
   share: ^0.6.0+1
   shared_preferences: ^0.4.3
   dio: ^2.1.0
+  fluttertoast: ^2.2.6
+  # Dart 常用工具类库 https://github.com/Sky24n/common_utils
+  common_utils: ^1.0.9
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2

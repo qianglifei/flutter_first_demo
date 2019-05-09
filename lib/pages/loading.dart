@@ -25,7 +25,7 @@ class _LoadingPageState extends State<LoadingPage> {
     return Center(
         child: Stack(
             children: <Widget>[
-                Image.asset("images/loading.png",fit: BoxFit.cover)
+                Image.asset("images/loading.png",fit: BoxFit.cover,width: double.infinity,height: double.infinity)
             ],
         ),
     );
