@@ -67,29 +67,30 @@ class AppState extends State<App>{
                   }
               )
             ],
-          ),
-          //侧滑功能
-          //drawer: DrawerPage(),
-          body: new IndexedStack(children: pages,index: _selectedIndex),
-          //底部导航按钮包含图标及文本
-          bottomNavigationBar: BottomNavigationBar(
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(icon: Icon(Icons.home),title: Text("首页")),
-                BottomNavigationBarItem(icon: Icon(Icons.assignment),title: Text("体系")),
-                BottomNavigationBarItem(icon: Icon(Icons.chat),title: Text("公众号")),
-                BottomNavigationBarItem(icon: Icon(Icons.navigation),title: Text("导航")),
-                BottomNavigationBarItem(icon: Icon(Icons.book),title: Text("项目")),
-              ],
-              //设置显示模式
-              type: BottomNavigationBarType.fixed,
-              //当前选中的索引
-              currentIndex: _selectedIndex,
-              //底部导航栏点击处理
-              onTap: _onItemTapped,
-          ),
-        ),
-        onWillPop: _onWillPop
-    );
+          )
+//          //侧滑功能
+//          //drawer: DrawerPage(),
+//          body: new IndexedStack(children: pages,index: _selectedIndex),
+//          //底部导航按钮包含图标及文本
+//          bottomNavigationBar: BottomNavigationBar(
+//              items: <BottomNavigationBarItem>[
+//                BottomNavigationBarItem(icon: Icon(Icons.home),title: Text("首页")),
+//                BottomNavigationBarItem(icon: Icon(Icons.assignment),title: Text("体系")),
+//                BottomNavigationBarItem(icon: Icon(Icons.chat),title: Text("公众号")),
+//                BottomNavigationBarItem(icon: Icon(Icons.navigation),title: Text("导航")),
+//                BottomNavigationBarItem(icon: Icon(Icons.book),title: Text("项目")),
+//              ],
+//              //设置显示模式
+//              type: BottomNavigationBarType.fixed,
+//              //当前选中的索引
+//              currentIndex: _selectedIndex,
+//              //底部导航栏点击处理
+//              onTap: _onItemTapped,
+//          ),
+//        ),
+//        onWillPop: _onWillPop
+//    );
+    ));
   }
 
   Future<bool> _onWillPop(){

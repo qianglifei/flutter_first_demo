@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pageview_bottomnav/common/application.dart';
+import 'package:flutter_pageview_bottomnav/common/user.dart';
+import 'package:flutter_pageview_bottomnav/event/login_event.dart';
+import 'package:flutter_pageview_bottomnav/ui/login/login_page.dart';
 
 class DrawerPage extends StatefulWidget{
   @override
@@ -12,6 +16,30 @@ class DrawerPage extends StatefulWidget{
 class DrawerPageState extends State<DrawerPage>{
   bool isLogin = false;
   String username = "未登录";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.registerLoginEvent();
+    if(null != User.singleton.userName){
+      isLogin = true;
+      username = User.singleton.userName;
+    }
+  }
+
+  void registerLoginEvent(){
+    Application.eventBus.on<LoginEvent>().listen((event) {
+      changeUI();
+    });
+  }
+
+  void changeUI() async{
+    setState(() {
+      isLogin = false;
+      username = User.singleton.userName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +59,7 @@ class DrawerPageState extends State<DrawerPage>{
                     Navigator.of(context).push(
                         MaterialPageRoute(
                         builder: (context){
-                          //return new LoginPage();
+                          return new LoginPage();
                         }
                     ));
                   }
@@ -45,7 +73,7 @@ class DrawerPageState extends State<DrawerPage>{
                   if(!isLogin){
                     Navigator.of(context).push(MaterialPageRoute(
                         builder:(context){
-                          //return new LoginPage();
+                          return new LoginPage();
                         }
                     ));
                   }
@@ -121,7 +149,8 @@ class DrawerPageState extends State<DrawerPage>{
             onTap: (){
               //TODO:跳转到下一个页面
             },
-          )
+          ),
+          logoutWidget()
         ],
       ),
     );
@@ -144,5 +173,29 @@ class DrawerPageState extends State<DrawerPage>{
             }
     ));
   }
+
+  Widget logoutWidget() {
+    if(User.singleton.userName != null){
+       return ListTile(
+         title: Text(
+           '退出登录',
+            textAlign: TextAlign.left,
+         ),
+         leading: Icon(Icons.power_settings_new,size: 22.0),
+         onTap: (){
+           User.singleton.clearUserInfor();
+           setState(() {
+             isLogin = false;
+             username = '未登录';
+           });
+         },
+       );
+    }else{
+      return SizedBox(
+        height: 0,
+      );
+    }
+  }
+
 
 }
