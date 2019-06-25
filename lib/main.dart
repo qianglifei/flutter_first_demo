@@ -3,6 +3,7 @@ import 'package:flutter_pageview_bottomnav/app.dart';
 import 'package:flutter_pageview_bottomnav/pages/loading.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_pageview_bottomnav/utils/theme_util.dart';
 import 'splash_screen.dart';
 
 void main(){
@@ -15,13 +16,17 @@ void main(){
 }
 
 class MyApp extends StatelessWidget {
+  Color themeColor = ThemeUtils.currentColorTheme;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
         title: "Flutter Demo",
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.light(),
+        theme: new ThemeData(
+          primaryColor: themeColor,
+          brightness: Brightness.light
+        ),
         color: Colors.pink,
         home: new LoadingPage(),
         /**

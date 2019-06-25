@@ -67,7 +67,7 @@ class DrawerPageState extends State<DrawerPage>{
               ),
               currentAccountPicture: InkWell(
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('images/head.jpeg'),
+                  backgroundImage: AssetImage('images/head.jpg'),
                 ),
                 onTap: (){
                   if(!isLogin){
