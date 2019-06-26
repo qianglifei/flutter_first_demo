@@ -206,6 +206,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     //登录
     Future<Null> _login() async {
       String username = loginEmailController.text;
+      print(username);
       String password = loginPasswordController.text;
       if ((null != username && username.trim().length > 0) &&
           (null != password && password.trim().length > 0)) {

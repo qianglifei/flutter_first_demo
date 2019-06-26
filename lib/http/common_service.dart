@@ -5,21 +5,21 @@ import 'api.dart';
 import 'package:flutter_pageview_bottomnav/common/user.dart';
 
 class CommonService{
+  Dio dio  = DioManager.singleton.dio;
   void getArticleList(Function callBack,Function errorCallBack, int _page){
-    DioManager.
-    singleton.
-    dio.
-    get(Api.HOME_ARTICLE_LIST + "$_page/json" , options: _getOptions()).
+    dio.get(Api.HOME_ARTICLE_LIST + "$_page/json" , options: _getOptions()).
     then((response){
-     // callBack(BannerModel(response.data));
+       //callBack(Artic)
+    }).catchError((e){
+      errorCallBack(e);
     });
   }
   ///登录
   void login(Function callback,String _username,String _password) async{
       FormData formData = new FormData.from({"username":_username,"password":_password});
-      DioManager.singleton.dio.
-      post(Api.USER_LOGIN,data:formData,options:_getOptions()).
+      dio.post(Api.USER_LOGIN,data:formData,options:_getOptions()).
       then((response) {
+        print(response.data.toString());
         callback(UserModel(response.data), response);
       });
   }
@@ -30,9 +30,7 @@ class CommonService{
           "password":_password,
           "repassword":_password
       });
-
-      DioManager.singleton.dio.
-      post(Api.USER_REGISTER,data:formData,Options:null).
+      dio.post(Api.USER_REGISTER,data:formData,options:null).
       then((response){
         print(response.toString());
         callback(UserModel(response.data));

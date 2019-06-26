@@ -16,9 +16,11 @@ class DioManager{
 
   static DioManager singleton = DioManager._internal();
 
-  factory DioManager() => singleton;
+  factory DioManager(){
+    return singleton;
+  }
 
-  get dio{
+  get dio {
     return _dio;
   }
 }
