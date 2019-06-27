@@ -165,6 +165,14 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>{
     });
   }
   ///显示空页面
+  void showEmpty(){
+     setState(() {
+       _isEmptyWidgetShow = true;
+       _isLoadingWidgetShow = false;
+       _isErrorWidgetShow = false;
+     });
+  }
+  ///显示错误
   void showError(){
     setState(() {
         _isErrorWidgetShow = false;

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/user_model.dart';
 import 'dio_manager.dart';
 import 'api.dart';
@@ -6,10 +7,19 @@ import 'package:flutter_pageview_bottomnav/common/user.dart';
 
 class CommonService{
   Dio dio  = DioManager.singleton.dio;
+  ///获取Banner数据
+  void getBannerList(Function callBack){
+    dio.get(Api.HOME_BANNER,options: _getOptions()).
+    then((response){
+      callBack(response.data);
+    });
+  }
+  ///获取文章列表
   void getArticleList(Function callBack,Function errorCallBack, int _page){
     dio.get(Api.HOME_ARTICLE_LIST + "$_page/json" , options: _getOptions()).
     then((response){
-       //callBack(Artic)
+      print(response.data.toString());
+       callBack(ArticleBean(response.data));
     }).catchError((e){
       errorCallBack(e);
     });
@@ -19,7 +29,7 @@ class CommonService{
       FormData formData = new FormData.from({"username":_username,"password":_password});
       dio.post(Api.USER_LOGIN,data:formData,options:_getOptions()).
       then((response) {
-        print(response.data.toString());
+        print("===" + response.data.toString());
         callback(UserModel(response.data), response);
       });
   }

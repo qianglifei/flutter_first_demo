@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pageview_bottomnav/base/base_widget.dart';
 import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/http/common_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends BaseWidget{
 
@@ -14,7 +16,7 @@ class HomeScreen extends BaseWidget{
 }
 
 class HomeScreenState extends BaseWidgetState<HomeScreen> {
-  List<Article> _data = new List();
+  List<Article> _datas = new List();
   //listview控制器
   ScrollController _scrollController = ScrollController();
   bool showToTopBtn = false; // 是否显示"返回到顶部"按钮
@@ -49,7 +51,30 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   //获取文章列表数据
   Future<Null> getData() async{
     _page = 0;
-    //CommonService().getArticleList(callBack, errorCallBack, _page);
+    CommonService().getArticleList((ArticleBean _articleBean){
+        if(_articleBean.errorCode == 0){
+          //成功
+          if(_articleBean.data.datas.length > 0){
+              //有数据
+              showContent();
+              setState(() {
+                _datas.clear();
+                _datas.addAll(_articleBean.data.datas);
+              });
+          }else{
+            //数据为空
+            showEmpty();
+          }
+        }else{
+          Fluttertoast.showToast(msg: _articleBean.errorMsg);
+        }
+    },(DioError error){
+        //发生错误
+        print(error.response);
+        setState(() {
+          showError();
+        });
+    }, _page);
   }
 
   @override
@@ -64,9 +89,25 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   Widget getContentWidget(BuildContext context) {
     // TODO: implement getContentWidget
     return Scaffold(
-      body: Center(
-        child: Text('sadfh'),
-      ),
+      body: RefreshIndicator(
+          onRefresh: getData,
+          //创建一个自定义子模型的ListView
+          //创建一个自带分割的ListView,这个分割可以帮助我们实现分割线的效果，
+          //它除了要传入itemBuilder之外，还需要传入一个SeparatorBuilder,
+          //也就是分割线
+          child: ListView.separated(
+              itemBuilder: _renderRow,
+              //分割线
+              separatorBuilder: (BuildContext context,int index){
+                return Container(
+                  height: 0.5,
+                  color: Colors.black26,
+                );
+              },
+              //包含轮播图和加载更多
+              itemCount: _datas.length + 2,
+          ),
+      )
     );
   }
 
@@ -79,8 +120,35 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   //加载更多的数据
   Future<Null> _getMore() async{
     _page++;
-//    CommonService().getArticleList((){},
-//        _page);
+    CommonService().getArticleList((ArticleBean _articleBean){
+        if(_articleBean.errorCode == 0){
+          //成功
+          if(_articleBean.data.datas.length > 0){
+             //有数据
+            showContent();
+            setState(() {
+              _datas.addAll(_articleBean.data.datas);
+            });
+          }else{
+            //数据为空
+            Fluttertoast.showToast(msg: "没有更多数据了");
+          }
+        }else{
+          Fluttertoast.showToast(msg: _articleBean.errorMsg);
+        }
+    }, (DioError error){
+
+    }, _page);
   }
 
+
+  Widget _renderRow(BuildContext context, int index) {
+//    if(index == 0){
+//        return Container(
+//          height: 200,
+//          color: Colors.green,
+//          child: new BannerWidget(),
+//        );
+//    }
+  }
 }
