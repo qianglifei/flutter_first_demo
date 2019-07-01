@@ -5,6 +5,8 @@ import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/http/common_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'banner.dart';
+
 class HomeScreen extends BaseWidget{
 
   @override
@@ -91,12 +93,15 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
     return Scaffold(
       body: RefreshIndicator(
           onRefresh: getData,
+          displacement: 15,
           //创建一个自定义子模型的ListView
           //创建一个自带分割的ListView,这个分割可以帮助我们实现分割线的效果，
           //它除了要传入itemBuilder之外，还需要传入一个SeparatorBuilder,
           //也就是分割线
           child: ListView.separated(
               itemBuilder: _renderRow,
+              //设置physics属性总是可滚动
+              physics: new AlwaysScrollableScrollPhysics(),
               //分割线
               separatorBuilder: (BuildContext context,int index){
                 return Container(
@@ -106,8 +111,15 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
               },
               //包含轮播图和加载更多
               itemCount: _datas.length + 2,
+              controller: _scrollController,
           ),
-      )
+      ),
+      floatingActionButton: !showToTopBtn ? null : FloatingActionButton(
+          onPressed: (){
+            _scrollController.animateTo(.0, duration: Duration(milliseconds: 20), curve: Curves.ease);
+          },
+          child: Icon(Icons.arrow_upward),
+      ),
     );
   }
 
@@ -143,12 +155,79 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
 
 
   Widget _renderRow(BuildContext context, int index) {
-//    if(index == 0){
-//        return Container(
-//          height: 200,
-//          color: Colors.green,
-//          child: new BannerWidget(),
-//        );
-//    }
+    if(index == 0){
+        return Container(
+          height: 200,
+          color: Colors.green,
+          child: new BannerWidget(),
+        );
+    }
+    if(index < _datas.length - 1){
+      return new InkWell(
+         onTap: (){
+             
+         },
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Row(
+                children: <Widget>[
+                  Text(_datas[index - 1].author,
+                  style: TextStyle(fontSize: 12),
+                  textAlign: TextAlign.left,
+                  ),
+                  Expanded(
+                      child: Text(
+                        _datas[index - 1].niceDate,
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.right,
+                      )
+                  )
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Row(
+                children: <Widget>[
+                  ///这是个用来让子项具有伸缩能力的Widget，父类是Flexible，
+                  ///俩个组件的构造函数是区别不大，灵活系数flex 1，一样，fit参数不一样
+                  ///Expanded 默认是占满分配空间，而Flexible则默认不需要
+                  Expanded(
+                    child:Text(
+                      _datas[index - 1].title,
+                      maxLines: 2,
+                      style: TextStyle(fontSize: 12),
+                      textAlign: TextAlign.left,
+                    )
+                  )
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text(
+                        _datas[index - 1].superChapterName,
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.left,
+                      )
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      );      
+    }
+    return null;
   }
+
+  bool get wantKeepAlive => true;
 }

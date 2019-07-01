@@ -6,4 +6,6 @@ class Api{
    static const String USER_LOGIN = "https://www.wanandroid.com/user/login";
    // 用户注册
    static const String USER_REGISTER = "https://www.wanandroid.com/user/register";
+   /// 知识体系
+   static const String SYSTEM_TREE = "https://www.wanandroid.com/tree/json";
 }

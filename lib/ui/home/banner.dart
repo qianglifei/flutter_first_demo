@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pageview_bottomnav/bean/banner_model.dart';
 import 'package:flutter_pageview_bottomnav/http/common_service.dart';
-
+import 'package:flutter_swiper/flutter_swiper.dart';
 class BannerWidget extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +24,21 @@ class BannerWidgetState extends State<BannerWidget>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    //return ;
+    return Swiper(
+       itemBuilder: (BuildContext context,int index){
+         if(_bannerList[index] == null || _bannerList[index].imagePath == null){
+            return new Container(
+              color: Colors.grey[100],
+            );
+         }else{
+            return buildItemImageWidget(context,index);
+         }
+       },
+      itemCount: _bannerList.length,
+      autoplay: true,
+      //默认指示器
+      pagination: new SwiperPagination(),
+    );
   }
 
   Future<Null> _getBanner() {
@@ -36,4 +50,20 @@ class BannerWidgetState extends State<BannerWidget>{
       }
     });
   }
+
+  Widget buildItemImageWidget(BuildContext context, int index) {
+    //点击有水波纹效果
+    return new InkWell(
+      onTap: (){
+        //
+      },
+      child: new Container(
+        child: new Image.network(
+          _bannerList[index].imagePath,
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
 }
+

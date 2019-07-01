@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/banner_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/systemtree_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/user_model.dart';
 import 'dio_manager.dart';
 import 'api.dart';
@@ -11,7 +13,7 @@ class CommonService{
   void getBannerList(Function callBack){
     dio.get(Api.HOME_BANNER,options: _getOptions()).
     then((response){
-      callBack(response.data);
+      callBack(BannerModel(response.data));
     });
   }
   ///获取文章列表
@@ -45,6 +47,16 @@ class CommonService{
         print(response.toString());
         callback(UserModel(response.data));
       });
+  }
+
+  ///获取知识体系列表
+  void getSystemTree(Function callBack,Function errorBack) async{
+    dio.get(Api.SYSTEM_TREE,options: _getOptions()).
+    then((response){
+      callBack(SystemTreeModel(response.data));
+    }).catchError((e){
+      errorBack(e);
+    });
   }
 
   Options _getOptions(){
