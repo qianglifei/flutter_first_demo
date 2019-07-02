@@ -3,6 +3,8 @@ import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/banner_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/systemtree_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/user_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/wx_article_content_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/wx_article_title_model.dart';
 import 'dio_manager.dart';
 import 'api.dart';
 import 'package:flutter_pageview_bottomnav/common/user.dart';
@@ -58,7 +60,22 @@ class CommonService{
       errorBack(e);
     });
   }
-
+  ///获取公众号名称
+  void getWxList(Function callBack,Function errorBack) async{
+    dio.get(Api.WX_LIST,options: _getOptions()).
+    then((response){
+      callBack(WxArticleTitleModel(response.data));
+    }).catchError((e){
+      errorBack(e);
+    });
+  }
+  ///获取公众号文章
+  void getWxArticleList(Function callBack , int _id , int _page){
+    dio.get(Api.WX_ARTICLE_LIST + "$_id/$_page/json",options: _getOptions()).
+    then((response){
+      callBack(WxArticleContentModel(response.data));
+    });
+  }
   Options _getOptions(){
     Map<String,String> map = new Map();
     List<String> cookies = User().cookie;

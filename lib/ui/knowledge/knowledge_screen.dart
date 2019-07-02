@@ -129,7 +129,7 @@ class KnowledgeScreenState extends BaseWidgetState<KnowledgeScreen>{
                Expanded(
                    child: Container(
                      padding: EdgeInsets.all(16),
-                     color: Colors.green,
+                     color: Colors.white,
                      child: Column(
                        mainAxisAlignment: MainAxisAlignment.start,
                        children: <Widget>[
@@ -169,8 +169,11 @@ class KnowledgeScreenState extends BaseWidgetState<KnowledgeScreen>{
     //单独一个Widget组件，用于返回需要生成的内容widget
     Widget content;
     for(var item in children){
-      tiles.add(new Chip(
+      tiles.add(
+          //chip 组件一般用于标签
+          new Chip(
           label: new Text(item.name),
+          //设置为MaterialTapTargetSize.shrinkWrap时，clip距顶部距离为0；设置为MaterialTapTargetSize.padded时距顶部有一个距离
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           backgroundColor: Utils.getChipBgColor(item.name),
       ));
@@ -182,7 +185,6 @@ class KnowledgeScreenState extends BaseWidgetState<KnowledgeScreen>{
       alignment: WrapAlignment.start,
       children: tiles,
     );
-
     return content;
   }
 
