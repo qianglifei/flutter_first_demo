@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/banner_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/navi_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/systemtree_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/user_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/wx_article_content_model.dart';
@@ -70,12 +71,21 @@ class CommonService{
     });
   }
   ///获取公众号文章
-  void getWxArticleList(Function callBack , int _id , int _page){
+  void getWxArticleList(Function callBack , int _id , int _page) async{
     dio.get(Api.WX_ARTICLE_LIST + "$_id/$_page/json",options: _getOptions()).
     then((response){
       callBack(WxArticleContentModel(response.data));
     });
   }
+  /// 获取导航列表数据
+  void getNaviList(Function callBack,Function errorBack) async{
+      dio.get(Api.NAVI_LIST,options: _getOptions()).then((response){
+        callBack(NaviModel(response.data));
+      }).catchError((e){
+         errorBack(e);
+      });
+  }
+
   Options _getOptions(){
     Map<String,String> map = new Map();
     List<String> cookies = User().cookie;

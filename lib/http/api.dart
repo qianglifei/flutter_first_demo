@@ -12,4 +12,6 @@ class Api{
    static const String WX_LIST = "https://wanandroid.com/wxarticle/chapters/json";
    // 公众号文章
    static const String WX_ARTICLE_LIST = "https://wanandroid.com/wxarticle/list/";
+   // 导航列表数据
+   static const String NAVI_LIST = "https://www.wanandroid.com/navi/json";
 }
