@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/banner_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/navi_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/project_tree_model.dart';
+import 'package:flutter_pageview_bottomnav/bean/projectlist_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/systemtree_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/user_model.dart';
 import 'package:flutter_pageview_bottomnav/bean/wx_article_content_model.dart';
@@ -84,6 +86,24 @@ class CommonService{
       }).catchError((e){
          errorBack(e);
       });
+  }
+
+  /// 获取项目分类
+  void getProjectTree(Function callBack,Function errorBack){
+    dio.get(Api.PROJECT_TREE,options: _getOptions()).
+    then((response){
+      callBack(ProjectTreeModel(response.data));
+    }).catchError((e){
+      errorBack(e);
+    });
+  }
+  ///获取项目列表
+  void getProjectList(Function callBack,int _page, int _id){
+    dio.
+    get(Api.PROJECT_LIST+"$_page/json?cid=$_id",options: _getOptions()).
+    then((response){
+      callBack(ProjectTreeListModel(response.data));
+    });
   }
 
   Options _getOptions(){
