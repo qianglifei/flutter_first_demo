@@ -138,7 +138,7 @@ class ProjectList extends StatefulWidget {
 
 class _ProjectListState  extends State<ProjectList>{
   List<ProjectTreeListDatas> _datas = new List();
-  ScrollController _scrollController = new ScrollController();
+  ScrollController _scrollController = ScrollController();
   int _page = 1;
   //是否显示“返回顶部按钮”
   bool showToTopBtn = false;
@@ -156,16 +156,18 @@ class _ProjectListState  extends State<ProjectList>{
       }
     });
 
-    //当前位置是否超过屏幕的高度
-    if(_scrollController.offset < 200 && showToTopBtn){
-      setState(() {
-        showToTopBtn = false;
-      });
-    }else if(_scrollController.offset >= 200 && showToTopBtn == false){
-      setState(() {
-        showToTopBtn = true;
-      });
-    }
+    _scrollController.addListener((){
+      //当前位置是否超过屏幕的高度
+      if(_scrollController.offset < 200 && showToTopBtn){
+        setState(() {
+          showToTopBtn = false;
+        });
+      }else if(_scrollController.offset >= 200 && showToTopBtn == false){
+        setState(() {
+          showToTopBtn = true;
+        });
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -174,13 +176,15 @@ class _ProjectListState  extends State<ProjectList>{
       body: RefreshIndicator(
           child: ListView.separated(
               itemBuilder: _renderRow,
+              physics: new AlwaysScrollableScrollPhysics(),
               separatorBuilder: (BuildContext context,int index){
                 return Container(
                   height: 0.5,
                   color: Colors.black26,
                 );
               },
-              itemCount: _datas.length
+              itemCount: _datas.length + 1,
+              controller: _scrollController,
           ),
           onRefresh: _getData
       ),
