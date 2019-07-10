@@ -56,7 +56,13 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>{
   }
 
   PreferredSizeWidget _getBaseAppBar() {
+      //如果AppBar设置高度，在AppBar外包一层PreferredSize，设置PreferredSize的属性为想要的高度即可
       return PreferredSize(
+        //控制child是否显示
+        /**
+         * 当offstage为true时，控件隐藏，为false时，控件显示
+         * 当offstage为不可见时，如果child 有动画时，需要手动停止动画，
+         */
         child: Offstage(
           offstage: !_isAppBarShow,
           child: getAppBar(),

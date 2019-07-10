@@ -4,7 +4,7 @@ import 'package:flutter_pageview_bottomnav/base/base_widget.dart';
 import 'package:flutter_pageview_bottomnav/bean/article_model.dart';
 import 'package:flutter_pageview_bottomnav/http/common_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'banner.dart';
 
 class HomeScreen extends BaseWidget{
@@ -17,25 +17,29 @@ class HomeScreen extends BaseWidget{
 
 }
 
-class HomeScreenState extends BaseWidgetState<HomeScreen> {
+class HomeScreenState extends BaseWidgetState<HomeScreen>{
   List<Article> _datas = new List();
   //listview控制器
   ScrollController _scrollController = ScrollController();
   bool showToTopBtn = false; // 是否显示"返回到顶部"按钮
   int _page = 0;
-
+  //添加数据
+  GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
+  GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
+  GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setAppBarVisible(false);
     //获取网络数据
-    getData();
+    //_easyRefreshKey.currentState.callRefresh();
+    _getData();
     _scrollController.addListener((){
        //滑到了底部，加载更多
-       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-          _getMore();
-       }
+//       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+//          _getMore();
+//       }
 
        //当前位置是否超过屏幕高度
        if(_scrollController.offset < 200 && showToTopBtn){
@@ -51,7 +55,7 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   }
 
   //获取文章列表数据
-  Future<Null> getData() async{
+  Future<Null> _getData() async{
     _page = 0;
     CommonService().getArticleList((ArticleBean _articleBean){
         if(_articleBean.errorCode == 0){
@@ -91,14 +95,9 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   Widget getContentWidget(BuildContext context) {
     // TODO: implement getContentWidget
     return Scaffold(
-      body: RefreshIndicator(
-          onRefresh: getData,
-          displacement: 15,
-          //创建一个自定义子模型的ListView
-          //创建一个自带分割的ListView,这个分割可以帮助我们实现分割线的效果，
-          //它除了要传入itemBuilder之外，还需要传入一个SeparatorBuilder,
-          //也就是分割线
-          child: ListView.separated(
+        body: new EasyRefresh(
+            key: _easyRefreshKey,
+            child: ListView.separated(
               itemBuilder: _renderRow,
               //设置physics属性总是可滚动
               physics: new AlwaysScrollableScrollPhysics(),
@@ -113,13 +112,42 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
               itemCount: _datas.length + 2,
               controller: _scrollController,
           ),
-      ),
-      floatingActionButton: !showToTopBtn ? null : FloatingActionButton(
-          onPressed: (){
-            _scrollController.animateTo(.0, duration: Duration(milliseconds: 20), curve: Curves.ease);
+          onRefresh: () async{
+              _getData();
           },
-          child: Icon(Icons.arrow_upward),
-      ),
+          loadMore: () async{
+              _getMore();
+          },
+        ),
+//      body: RefreshIndicator(
+//          onRefresh: getData,
+//          displacement: 15,
+//          //创建一个自定义子模型的ListView
+//          //创建一个自带分割的ListView,这个分割可以帮助我们实现分割线的效果，
+//          //它除了要传入itemBuilder之外，还需要传入一个SeparatorBuilder,
+//          //也就是分割线
+//          child: ListView.separated(
+//              itemBuilder: _renderRow,
+//              //设置physics属性总是可滚动
+//              physics: new AlwaysScrollableScrollPhysics(),
+//              //分割线
+//              separatorBuilder: (BuildContext context,int index){
+//                return Container(
+//                  height: 0.5,
+//                  color: Colors.black26,
+//                );
+//              },
+//              //包含轮播图和加载更多
+//              itemCount: _datas.length + 2,
+//              controller: _scrollController,
+//          ),
+//      ),
+//      floatingActionButton: !showToTopBtn ? null : FloatingActionButton(
+//          onPressed: (){
+//            _scrollController.animateTo(.0, duration: Duration(milliseconds: 20), curve: Curves.ease);
+//          },
+//          child: Icon(Icons.arrow_upward),
+//      ),
     );
   }
 
@@ -127,7 +155,7 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   void onClickErrorWidget() {
     // TODO: implement onClickErrorWidget
     showLoading();
-    getData();
+    _getData();
   }
   //加载更多的数据
   Future<Null> _getMore() async{
@@ -149,7 +177,11 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
           Fluttertoast.showToast(msg: _articleBean.errorMsg);
         }
     }, (DioError error){
-
+      //发生错误
+      print(error.response);
+      setState(() {
+        showError();
+      });
     }, _page);
   }
 
@@ -200,7 +232,11 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
                     child:Text(
                       _datas[index - 1].title,
                       maxLines: 2,
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF3D4E5F)
+                      ),
                       textAlign: TextAlign.left,
                     )
                   )
@@ -230,4 +266,12 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   }
 
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
+  }
+
 }

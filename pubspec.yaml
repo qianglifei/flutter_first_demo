@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   # 汉字转拼音库 https://github.com/flutterchina/lpinyin
   lpinyin: ^1.0.7
+  flutter_easyrefresh: ^1.2.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

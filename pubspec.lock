@@ -35,14 +35,28 @@ packages:
       name: common_utils
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
+  convert:
+    dependency: transitive
+    description:
+      name: convert
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.1.1"
   cookie_jar:
     dependency: transitive
     description:
       name: cookie_jar
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.6"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -63,7 +77,7 @@ packages:
       name: dio
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.7"
+    version: "2.1.13"
   event_bus:
     dependency: "direct main"
     description:
@@ -76,6 +90,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_easyrefresh:
+    dependency: "direct main"
+    description:
+      name: flutter_easyrefresh
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.2.7"
   flutter_page_indicator:
     dependency: transitive
     description:
