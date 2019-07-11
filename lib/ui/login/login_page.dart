@@ -25,8 +25,14 @@ class LoginPage extends StatefulWidget{
   ///利用InheritedWidget可以把数据传递给子控件
   ///利用PageView和PageController实现页面滑动切换
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin{
+  /**
+   *GlobalKey：整个应用程序中唯一的键
+      ScaffoldState：Scaffold框架的状态
+      解释：_scaffoldKey的值是Scaffold框架状态的唯一键
+   */
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  //通知控件获取/失去焦点
   final FocusNode myFocusNodeEmailLogin = FocusNode();
   final FocusNode myFocusNodePasswordLogin = FocusNode();
 
@@ -40,6 +46,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   bool _obscureTextSignup = true;
   bool _obscureTextSignupConfirm = true;
 
+  //文本框选择器
   TextEditingController signupNameController = new TextEditingController();
   TextEditingController signupPasswordController = new TextEditingController();
   TextEditingController signupConfirmPasswordController = new TextEditingController();
@@ -65,8 +72,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height >= 775.0
-                  ? MediaQuery.of(context).size.height:775.0,
+              height: MediaQuery.of(context).size.height >= 500.0
+                  ? MediaQuery.of(context).size.height:500.0,
               decoration: new BoxDecoration(
                 gradient: new LinearGradient(
                     colors: [
@@ -76,7 +83,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     begin: const FractionalOffset(0.0, 0.0),
                     end: const FractionalOffset(1.0, 1.0),
                     stops: [0.0,1.0],
-                    tileMode: TileMode.clamp),
+                    tileMode: TileMode.clamp
+                ),
                ),
             child: Column(
 //            关键属性
@@ -136,7 +144,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   }
 
   Widget _buildMenuBar(BuildContext context) {
-
     return Container(
       width: 300.0,
       height: 50.0,
@@ -229,23 +236,24 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       }
     }
     return Container(
-      padding: EdgeInsets.only(top: 23.0),
+      padding: EdgeInsets.only(top: 24.0),
+      color: Colors.orange,
       child: Column(
         children: <Widget>[
           Stack(
             alignment: Alignment.topCenter,
-            overflow: Overflow.visible, //溢出，充满
+            overflow: Overflow.clip, //溢出，充满
             children: <Widget>[
               Card(
-                elevation: 5.0,
+                elevation: 3.0,
                 color: Colors.cyan,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(80.0),
                 ),
                 child: Container(
                   width: 300.0,
                   height: 150.0,
-                  color: Colors.white,
+                  color: Colors.yellow,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -316,9 +324,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 240.0),
+                margin: EdgeInsets.only(top: 260.0),
                 decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
                   boxShadow: <BoxShadow>[
                     //阴影效果
                     BoxShadow(
@@ -356,7 +364,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       begin: const FractionalOffset(0.2, 0.2),
                       end: const FractionalOffset(1.0, 1.0),
                       stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                      tileMode: TileMode.clamp
+                  ),
                 ),
                 child: FlatButton(
                     shape: RoundedRectangleBorder(
